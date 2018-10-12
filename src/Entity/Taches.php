@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Taches
  *
- * @ORM\Table(name="taches", indexes={@ORM\Index(name="id_etape", columns={"id_etape"})})
  * @ORM\Entity
  */
 class Taches
@@ -21,17 +20,24 @@ class Taches
      */
     private $id;
 
-    /**
-     * @var \Etapes
+     /**
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Etapes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_etape", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="libellet", type="string", length=30, nullable=false)
      */
-    private $idEtape;
+    private $libelle;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etapes", inversedBy="taches")
+     */
+    private $etapes;
 
+    public function setEtape(?Etapes $etapes): self
+    {
+        $this->etapes = $etapes;
+
+        return $this;
+    }
 
     /**
      * Get the value of id
@@ -44,25 +50,25 @@ class Taches
     }
 
     /**
-     * Get the value of idEtape
+     * Get the value of libelle
      *
-     * @return  \Etapes
+     * @return  string
      */ 
-    public function getIdEtape()
+    public function getLibelle()
     {
-        return $this->idEtape;
+        return $this->libelle;
     }
 
     /**
-     * Set the value of idEtape
+     * Set the value of libelle
      *
-     * @param  \Etapes  $idEtape
+     * @param  string  $libelle
      *
      * @return  self
      */ 
-    public function setIdEtape(\Etapes $idEtape)
+    public function setLibelle(string $libelle)
     {
-        $this->idEtape = $idEtape;
+        $this->libelle = $libelle;
 
         return $this;
     }

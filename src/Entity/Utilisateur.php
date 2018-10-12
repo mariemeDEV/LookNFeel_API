@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Utilisateur
  *
- * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="id_equipe", columns={"id_equipe"})})
  * @ORM\Entity
  */
 class Utilisateur
@@ -29,9 +28,9 @@ class Utilisateur
     private $prenom;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="nom",type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=30, nullable=false)
      */
     private $nom;
 
@@ -43,9 +42,9 @@ class Utilisateur
     private $telephone;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="e_mail", type="integer", nullable=false)
+     * @ORM\Column(name="e_mail", type="string", length=30, nullable=false)
      */
     private $eMail;
 
@@ -77,31 +76,23 @@ class Utilisateur
      */
     private $photo;
 
-    /**
-     * @var \Equipe
-     *
-     * @ORM\ManyToOne(targetEntity="Equipe")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_equipe", referencedColumnName="id")
-     * })
-     */
-    private $idEquipe;
-
      /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Projet", mappedBy="utilisateur")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Equipe", inversedBy="utilisateur")
      */
-    private $projets;
+    private $equipe;
 
-//Classe  Projets au cas oû le user a le profil client, il posséde des projets
-        public function __construct(){
-            $this->projets = new ArrayCollection();
-        }
-/**
- * @return ArrayCollection/Projet
- */
-        public function getProjets() {
-            return $this->projets;
-        }
+    public function setEquipe(?Equipe $equipe): self
+    {
+        $this->equipe = $equipe;
+
+        return $this;
+    }
+
+    // public function getEquipe(): Equipe
+    // {
+    //     return $this->equipe;
+    // }
+
     /**
      * Get the value of id
      *
@@ -139,7 +130,7 @@ class Utilisateur
     /**
      * Get the value of nom
      *
-     * @return  int
+     * @return  string
      */ 
     public function getNom()
     {
@@ -149,11 +140,11 @@ class Utilisateur
     /**
      * Set the value of nom
      *
-     * @param  int  $nom
+     * @param  string  $nom
      *
      * @return  self
      */ 
-    public function setNom(int $nom)
+    public function setNom(string $nom)
     {
         $this->nom = $nom;
 
@@ -187,7 +178,7 @@ class Utilisateur
     /**
      * Get the value of eMail
      *
-     * @return  int
+     * @return  string
      */ 
     public function getEMail()
     {
@@ -197,11 +188,11 @@ class Utilisateur
     /**
      * Set the value of eMail
      *
-     * @param  int  $eMail
+     * @param  string  $eMail
      *
      * @return  self
      */ 
-    public function setEMail(int $eMail)
+    public function setEMail(string $eMail)
     {
         $this->eMail = $eMail;
 
@@ -304,27 +295,5 @@ class Utilisateur
         return $this;
     }
 
-    /**
-     * Get the value of idEquipe
-     *
-     * @return  \Equipe
-     */ 
-    public function getIdEquipe()
-    {
-        return $this->idEquipe;
-    }
-
-    /**
-     * Set the value of idEquipe
-     *
-     * @param  \Equipe  $idEquipe
-     *
-     * @return  self
-     */ 
-    public function setIdEquipe(\Equipe $idEquipe)
-    {
-        $this->idEquipe = $idEquipe;
-
-        return $this;
-    }
+   
 }

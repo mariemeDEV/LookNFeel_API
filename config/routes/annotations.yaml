@@ -1,3 +1,12 @@
 controllers:
     resource: ../../src/Controller/
     type: annotation
+    #config/routes/annotations.yaml
+    #Note: use your own resource/directory as you prefer
+    # web_controller:
+    #     resource: ../../Controller/Web/
+    #     type: annotation
+    # rest_controller:
+    #     resource: ../../Controller
+    #     type: annotation
+    #     prefix: /api

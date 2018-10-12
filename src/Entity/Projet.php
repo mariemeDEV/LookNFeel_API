@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Client;
 
 /**
  * Projet
  *
- * @ORM\Table(name="projet", indexes={@ORM\Index(name="id_equipe", columns={"id_equipe"}), @ORM\Index(name="id_utilisateur", columns={"id_utilisateur"})})
  * @ORM\Entity
  */
 class Projet
@@ -20,6 +20,11 @@ class Projet
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="projet")
+     */
+    private $client;
 
     /**
      * @var string
@@ -50,41 +55,28 @@ class Projet
     private $brief;
 
     /**
-     * @var \Equipe
-     *
-     * @ORM\ManyToOne(targetEntity="Equipe")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_equipe", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="App\Entity\Equipe", inversedBy="projet")
      */
-    private $idEquipe;
-
-    /**
-     * @var \Utilisateur
-     *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_utilisateur", referencedColumnName="id")
-     * })
-     */
-    private $idUtilisateur;
+    private $equipe;
 
      /**
      * @ORM\OneToMany(targetEntity="App\Entity\Etapes", mappedBy="projet")
      */
     private $etapes;
 
-
-//Classe Etapes 
-
-    public function __construct(){
-        $this->etapes = new ArrayCollection();
+    public function __construct()
+    {
+        $this->etapes = array();
     }
 
-/**@return ArrayCollection/Etapes */
-    public function getEtapes(){
+    /**
+     * @return Etapes[]
+     */
+    public function getetapes()
+    {
         return $this->etapes;
     }
+
     /**
      * Get the value of id
      *
@@ -93,6 +85,25 @@ class Projet
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function setEquipe(?Equipe $equipe): self
+    {
+        $this->equipe = $equipe;
+
+        return $this;
+    }
+
+    public function getEquipe(): Equipe
+    {
+        return $this->equipe;
     }
 
     /**
@@ -115,6 +126,7 @@ class Projet
     public function setNom(string $nom)
     {
         $this->nom = $nom;
+
         return $this;
     }
 
@@ -138,6 +150,7 @@ class Projet
     public function setStatut(string $statut)
     {
         $this->statut = $statut;
+
         return $this;
     }
 
@@ -161,6 +174,7 @@ class Projet
     public function setDescription(string $description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -184,29 +198,10 @@ class Projet
     public function setBrief(string $brief)
     {
         $this->brief = $brief;
+
         return $this;
     }
 
-    /**
-     * Get the value of idUtilisateur
-     *
-     * @return  \Utilisateur
-     */ 
-    public function getIdUtilisateur()
-    {
-        return $this->idUtilisateur;
-    }
+   
 
-    /**
-     * Set the value of idUtilisateur
-     *
-     * @param  \Utilisateur  $idUtilisateur
-     *
-     * @return  self
-     */ 
-    public function setIdUtilisateur(\Utilisateur $idUtilisateur)
-    {
-        $this->idUtilisateur = $idUtilisateur;
-        return $this;
-    }
 }
