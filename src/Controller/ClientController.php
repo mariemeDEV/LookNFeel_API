@@ -20,20 +20,19 @@ class ClientController extends FOSRestController
     public function listClients() : JsonResponse{
         $clientsRepository = $this->getDoctrine()->getRepository(Client::class);
         $clients           = $clientsRepository->findAll();
-        //return new JsonResponse($this->getApi()->listClass($clients),200);
         if(empty($clients)){
             $response=array( 
                 'message'=>'post not found',
                 'result'=>null
             );
-            return new JsonResponse($response , Response::HTTP_NOT_FOUND);
+        return new JsonResponse($response , Response::HTTP_NOT_FOUND);
         }
         $clientsData = $this->get('serializer')->serialize($clients,'json');
         $response=array(
            'message'=>'succes',
            'result'=>json_decode($clientsData)
-       );
-       return new JsonResponse($response, 200);
+        );
+        return new JsonResponse($response, 200);
     }
 
 //Get details of a client
@@ -60,7 +59,7 @@ class ClientController extends FOSRestController
 
 //Add a new client
     /**
-    * @Rest\Post("/addUser")
+    * @Rest\Post("/addClient")
     */
     public function postClient(Request $request) : JsonResponse{
         $em             = $this->getDoctrine()->getManager();

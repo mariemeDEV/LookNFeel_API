@@ -10,7 +10,7 @@ use App\Entity\Client;
  *
  * @ORM\Entity
  */
-class Projet
+class ProjetFiliale
 {
     /**
      * @var int
@@ -32,28 +32,7 @@ class Projet
      * @ORM\Column(name="nom", type="string", length=30, nullable=false)
      */
     private $nom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="statut", type="string", length=0, nullable=false)
-     */
-    private $statut;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=500, nullable=false)
-     */
-    private $description;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="brief", type="string", length=400, nullable=false)
-     */
-    private $brief;
-
+ 
      /**
      * @ORM\Column(name="datePrestation", type="date", nullable=false)
      */
@@ -81,33 +60,11 @@ class Projet
     private $marges;
 
      /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypePrestation", inversedBy="projet")
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypePrestation", inversedBy="projet_filiale")
      */
     private $typePrestation;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Equipe", inversedBy="projet")
-     */
-    private $equipe;
-
-     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Etapes", mappedBy="projet")
-     */
-    private $etapes;
-
-    public function __construct()
-    {
-        $this->etapes = array();
-    }
-
-    /**
-     * @return Etapes[]
-     */
-    public function getetapes()
-    {
-        return $this->etapes;
-    }
-
+   
     /**
      * Get the value of id
      *
@@ -125,16 +82,12 @@ class Projet
         return $this;
     }
 
-    public function setEquipe(?Equipe $equipe): self
+    /**
+     * Get the value of client
+     */ 
+    public function getClient()
     {
-        $this->equipe = $equipe;
-
-        return $this;
-    }
-
-    public function getEquipe(): Equipe
-    {
-        return $this->equipe;
+        return $this->client->getProjets();
     }
 
     /**
@@ -157,78 +110,6 @@ class Projet
     public function setNom(string $nom)
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of statut
-     *
-     * @return  string
-     */ 
-    public function getStatut()
-    {
-        return $this->statut;
-    }
-
-    /**
-     * Set the value of statut
-     *
-     * @param  string  $statut
-     *
-     * @return  self
-     */ 
-    public function setStatut(string $statut)
-    {
-        $this->statut = $statut;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of description
-     *
-     * @return  string
-     */ 
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set the value of description
-     *
-     * @param  string  $description
-     *
-     * @return  self
-     */ 
-    public function setDescription(string $description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of brief
-     *
-     * @return  string
-     */ 
-    public function getBrief()
-    {
-        return $this->brief;
-    }
-
-    /**
-     * Set the value of brief
-     *
-     * @param  string  $brief
-     *
-     * @return  self
-     */ 
-    public function setBrief(string $brief)
-    {
-        $this->brief = $brief;
 
         return $this;
     }

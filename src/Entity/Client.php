@@ -56,6 +56,11 @@ class Client
      */
     private $pasword;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Filiale", inversedBy="client")
+    */
+    private $filiale;
+
      /**
      * @ORM\OneToMany(targetEntity="App\Entity\Projet", mappedBy="client")
      */
@@ -200,6 +205,18 @@ class Client
     public function setPasword(string $pasword)
     {
         $this->pasword = $pasword;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of filiale
+     *
+     * @return  self
+     */ 
+    public function setFiliale($filiale)
+    {
+        $this->filiale = $filiale;
 
         return $this;
     }

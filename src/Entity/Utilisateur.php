@@ -81,9 +81,14 @@ class Utilisateur
      */
     private $equipe;
 
+    /**
+     * @var int
+     */
+    private $idEquipe;
+
     public function setEquipe(?Equipe $equipe): self
     {
-        $this->equipe = $equipe;
+        $this->equipe = $equipe->getId();
 
         return $this;
     }
@@ -296,4 +301,28 @@ class Utilisateur
     }
 
    
+
+    /**
+     * Get the value of idEquipe
+     *
+     * @return  int
+     */ 
+    public function getIdEquipe()
+    {
+        return $this->idEquipe;
+    }
+
+    /**
+     * Set the value of idEquipe
+     *
+     * @param  int  $idEquipe
+     *
+     * @return  self
+     */ 
+    public function setIdEquipe(int $idEquipe)
+    {
+        $this->idEquipe = $idEquipe;
+
+        return $this;
+    }
 }
