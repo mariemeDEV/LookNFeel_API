@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Commentaires
  *
- * @ORM\Table(name="commentaires", indexes={@ORM\Index(name="id_etape", columns={"id_etape"})})
  * @ORM\Entity
  */
 class Commentaires
@@ -21,35 +20,7 @@ class Commentaires
      */
     private $id;
 
-    /**
-     * @var \Etapes
-     *
-     * @ORM\ManyToOne(targetEntity="Etapes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_etape", referencedColumnName="id")
-     * })
-     */
-    private $idEtape;
 
-     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reponses", mappedBy="commentaires")
-     */
-    private $reponses;
-
-    private function __construct(){
-        $this->reponses = new ArrayCollection();
-    }
-
-//classe reponses
-    /**
-     * @return Collection/Reponses[]
-     */
-    public function getReponses() : Collection {
-        return $this->reponses;
-    }
-
-    
-//ID
     /**
      * Get the value of id
      *
@@ -60,30 +31,65 @@ class Commentaires
         return $this->id;
     }
 
-
-//classe Etapes
-    /**
-     * Get the value of idEtape
+     /**
+     * @var string
      *
-     * @return  \Etapes
-     */ 
-    public function getIdEtape()
+     * @ORM\Column(name="comment", type="string", length=300, nullable=false)
+     */
+    private $comment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etapes", inversedBy="commentaires")
+     */
+    private $etapes;
+
+     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reponses", mappedBy="commentaires")
+     */
+    private $reponses;
+
+    public function __construct()
     {
-        return $this->idEtape;
+        $this->reponses = array();
     }
 
     /**
-     * Set the value of idEtape
-     *
-     * @param  \Etapes  $idEtape
-     *
-     * @return  self
-     */ 
-    public function setIdEtape(\Etapes $idEtape)
+     * @return Reponses[]
+     */
+    public function getReponses()
     {
-        $this->idEtape = $idEtape;
+        return $this->reponses;
+    }
+
+
+    public function setEtape(?Etapes $etapes): self
+    {
+        $this->etapes = $etapes;
 
         return $this;
     }
-    
+
+    /**
+     * Get the value of comment
+     *
+     * @return  string
+     */ 
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set the value of comment
+     *
+     * @param  string  $comment
+     *
+     * @return  self
+     */ 
+    public function setComment(string $comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
 }

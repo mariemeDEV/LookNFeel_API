@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reponses
  *
- * @ORM\Table(name="reponses", indexes={@ORM\Index(name="id_commentaire", columns={"id_commentaire"})})
  * @ORM\Entity
  */
 class Reponses
@@ -24,20 +23,9 @@ class Reponses
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="string", length=500, nullable=false)
+     * @ORM\Column(name="response", type="string", length=500, nullable=false)
      */
-    private $content;
-
-    /**
-     * @var \Commentaires
-     *
-     * @ORM\ManyToOne(targetEntity="Commentaires")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_commentaire", referencedColumnName="id")
-     * })
-     */
-    private $idCommentaire;
-
+    private $response;
 
 
     /**
@@ -49,51 +37,39 @@ class Reponses
     {
         return $this->id;
     }
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Commentaires", inversedBy="reponses")
+     */
+    private $commentaires;
 
-    /**
-     * Get the value of content
-     *
-     * @return  string
-     */ 
-    public function getContent()
+    public function setCommentaires(?Commentaires $commentaires): self
     {
-        return $this->content;
-    }
-
-    /**
-     * Set the value of content
-     *
-     * @param  string  $content
-     *
-     * @return  self
-     */ 
-    public function setContent(string $content)
-    {
-        $this->content = $content;
+        $this->commentaires = $commentaires;
 
         return $this;
     }
 
     /**
-     * Get the value of idCommentaire
+     * Get the value of response
      *
-     * @return  \Commentaires
+     * @return  string
      */ 
-    public function getIdCommentaire()
+    public function getResponse()
     {
-        return $this->idCommentaire;
+        return $this->response;
     }
 
     /**
-     * Set the value of idCommentaire
+     * Set the value of response
      *
-     * @param  \Commentaires  $idCommentaire
+     * @param  string  $response
      *
      * @return  self
      */ 
-    public function setIdCommentaire(\Commentaires $idCommentaire)
+    public function setResponse(string $response)
     {
-        $this->idCommentaire = $idCommentaire;
+        $this->response = $response;
 
         return $this;
     }

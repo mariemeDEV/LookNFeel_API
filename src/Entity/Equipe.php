@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -23,24 +22,24 @@ class Equipe
      */
     private $id;
 
-     /**
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Utilisateur", mappedBy="equipe")
      */
     private $utilisateurs;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->utilisateurs = new ArrayCollection();
     }
 
-//Classe utilisateurs
     /**
-     * @return Collection/Utilisateur
+     * @return Collection|Utilisateur[]
      */
-    public function getUtilisateurs() : Collection {
+    public function getUtilisateurs(): Collection
+    {
         return $this->utilisateurs;
     }
 
-//ID
     /**
      * Get the value of id
      *

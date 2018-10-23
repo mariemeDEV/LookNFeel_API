@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Etapes
  *
- * @ORM\Table(name="etapes", indexes={@ORM\Index(name="id_projet", columns={"id_projet"})})
  * @ORM\Entity
  */
 class Etapes
@@ -43,70 +42,82 @@ class Etapes
     private $etat;
 
     /**
-     * @var \Projet
-     *
-     * @ORM\ManyToOne(targetEntity="Projet")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
-     * })
-     */
-    private $idProjet;
-
-     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Taches", mappedBy="etapes")
      */
     private $taches;
 
-     /**
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Fichiers", mappedBy="etapes")
      */
     private $fichiers;
 
-     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaires", mappedBy="commentaires")
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentaires", mappedBy="etapes")
      */
     private $commentaires;
 
-    public function __construct(){
-        $this->taches = new ArrayCollection();
-        $this->fichiers = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
+    public function __construct()
+    {
+        $this->taches       = array();
+        $this->fichiers     = array();
+        $this->commentaires = array();
     }
 
-    //Classe tâches
-        public function getTaches() {
-            $this->taches = $taches;
-        }
+    /**
+     * @return Taches[]
+     */
+    public function getTaches()
+    {
+        return $this->taches;
+    }
 
-    //Classe fichiers
-        public function getFichiers() {
-            $this->fichiers = $fichiers;
-        }
+    /**
+     * @return Fichiers[]
+     */
+    public function getFichiers()
+    {
+        return $this->fichiers;
+    }
 
-    //Classe commentaires
-        public function getCommentaires() {
-            $this->commentaires = $commentaires;
-        }
+     /**
+     * @return Commentaires[]
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Projet", inversedBy="etapes")
+     */
+    private $projet;
+
+    public function setProjet(?Projet $projet): self
+    {
+        $this->projet = $projet;
+
+        return $this;
+    }
 
     /**
      * Get the value of id
      *
      * @return  int
      */ 
-        public function getId()
-        {
-            return $this->id;
-        }
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Get the value of nom
      *
      * @return  string
      */ 
-        public function getNom()
-        {
-            return $this->nom;
-        }
+    public function getNom()
+    {
+        return $this->nom;
+    }
 
     /**
      * Set the value of nom
@@ -115,21 +126,22 @@ class Etapes
      *
      * @return  self
      */ 
-        public function setNom(string $nom)
-        {
-            $this->nom = $nom;
-            return $this;
-        }
+    public function setNom(string $nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
 
     /**
      * Get the value of duree
      *
      * @return  int
      */ 
-        public function getDuree()
-        {
-            return $this->duree;
-        }
+    public function getDuree()
+    {
+        return $this->duree;
+    }
 
     /**
      * Set the value of duree
@@ -138,20 +150,22 @@ class Etapes
      *
      * @return  self
      */ 
-        public function setDuree(int $duree){
-            $this->duree = $duree;
-            return $this;
-        }
+    public function setDuree(int $duree)
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
 
     /**
      * Get the value of etat
      *
      * @return  string
      */ 
-        public function getEtat()
-        {
-            return $this->etat;
-        }
+    public function getEtat()
+    {
+        return $this->etat;
+    }
 
     /**
      * Set the value of etat
@@ -160,29 +174,10 @@ class Etapes
      *
      * @return  self
      */ 
-        public function setEtat(string $etat){
-            $this->etat = $etat;
-            return $this;
-        }
+    public function setEtat(string $etat)
+    {
+        $this->etat = $etat;
 
-    /**
-     * Get the value of idProjet
-     *
-     * @return  \Projet
-     */ 
-        public function getIdProjet() {
-        return $this->idProjet;
-        }
-
-    /**
-     * Set the value of idProjet
-     *
-     * @param  \Projet  $idProjet
-     *
-     * @return  self
-     */ 
-        public function setIdProjet(\Projet $idProjet) {
-            $this->idProjet = $idProjet;
-            return $this;
-        }
+        return $this;
+    }
 }
