@@ -22,7 +22,7 @@ class Projet
     private $id;
 
      /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="projet")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="projet", cascade={"persist"})
      */
     private $client;
 
@@ -47,15 +47,8 @@ class Projet
      */
     private $description;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="brief", type="string", length=400, nullable=false)
-     */
-    private $brief;
-
      /**
-     * @ORM\Column(name="datePrestation", type="date", nullable=false)
+     * @ORM\Column(name="datePrestation", type="string", nullable=false)
      */
     private $datePrestation;
 
@@ -81,12 +74,12 @@ class Projet
     private $marges;
 
      /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypePrestation", inversedBy="projet")
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypePrestation", inversedBy="projet", cascade={"persist"})
      */
     private $typePrestation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Equipe", inversedBy="projet")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Equipe", inversedBy="projet", cascade={"persist"})
      */
     private $equipe;
 
@@ -118,25 +111,7 @@ class Projet
         return $this->id;
     }
 
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    public function setEquipe(?Equipe $equipe): self
-    {
-        $this->equipe = $equipe;
-
-        return $this;
-    }
-
-    public function getEquipe(): Equipe
-    {
-        return $this->equipe;
-    }
-
+    
     /**
      * Get the value of nom
      *
@@ -205,30 +180,6 @@ class Projet
     public function setDescription(string $description)
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of brief
-     *
-     * @return  string
-     */ 
-    public function getBrief()
-    {
-        return $this->brief;
-    }
-
-    /**
-     * Set the value of brief
-     *
-     * @param  string  $brief
-     *
-     * @return  self
-     */ 
-    public function setBrief(string $brief)
-    {
-        $this->brief = $brief;
 
         return $this;
     }
@@ -342,6 +293,46 @@ class Projet
     public function setMarges(float $marges)
     {
         $this->marges = $marges;
+
+        return $this;
+    }
+
+    // /**
+    //  * Get the value of client
+    //  */ 
+    // public function getClient()
+    // {
+    //     return $this->client;
+    // }
+
+    /**
+     * Set the value of client
+     *
+     * @return  self
+     */ 
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    // /**
+    //  * Get the value of equipe
+    //  */ 
+    // public function getEquipe()
+    // {
+    //     return $this->equipe;
+    // }
+
+    /**
+     * Set the value of equipe
+     *
+     * @return  self
+     */ 
+    public function setEquipe($equipe)
+    {
+        $this->equipe = $equipe;
 
         return $this;
     }

@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Client;
+use App\Entity\Filiale;
+
 
 class ClientController extends FOSRestController
 {
@@ -57,19 +59,47 @@ class ClientController extends FOSRestController
         }
     }
 
+    public function generatePassword($length):string{
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@';
+        $charactersLength = strlen($characters);
+        $password = '';
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $password;
+    }
+
+    public function sendEmail(\Swift_Mailer $mailer){
+    $message = (new \Swift_Message('Hello Email'))
+        ->setFrom('kndeyemarieme@gmail.com')
+        ->setTo('ousmanendiaye352@gmail.com')
+        ->setBody(
+           "polo",
+           "text/plain"
+        );
+    $mailer->send($message);
+
+}
+
 //Add a new client
     /**
     * @Rest\Post("/addClient")
     */
-    public function postClient(Request $request) : JsonResponse{
+    public function postClient(Request $request,\Swift_Mailer $mailer) : JsonResponse{
         $em             = $this->getDoctrine()->getManager();
         $requestContent = $request->getContent();
         $client         = $this->get('serializer')->deserialize($requestContent,"App\Entity\Client", 'json'); 
+        $filialeRepo    = $this->getDoctrine()->getRepository(Filiale::class);
+        $filiale        = $filialeRepo->find($request->get('filiale'));
         if($client==null){
             return new JsonResponse("le contenu des données à insérer est vide",Response::HTTP_BAD_REQUEST);
         }else{
-            $em->persist($client);
-            $em->flush();
+            $this->sendEmail($mailer);
+            $client->setFiliale($filiale);
+            $client->setUsername($request->get('email'))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ;
+            $client->setPasword($this->generatePassword(5));
+            // $em->persist($client);
+            // $em->flush();
             return new JsonResponse("Insertion effectuee avec succes",200);        
         }
     }

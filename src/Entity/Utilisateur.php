@@ -55,6 +55,13 @@ class Utilisateur
      */
     private $profil;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=0, nullable=true)
+     */
+    private $role;
+
     /**
      * @var string
      *
@@ -68,6 +75,13 @@ class Utilisateur
      * @ORM\Column(name="password", type="string", length=30, nullable=false)
      */
     private $password;
+
+    //  /**
+    //  * @var string
+    //  *
+    //  * @ORM\Column(name="responsabilite", type="string", length=30, nullable=true)
+    //  */
+    // private $responsabilite;
 
     /**
      * @var string

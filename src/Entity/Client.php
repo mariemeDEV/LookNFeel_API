@@ -57,7 +57,7 @@ class Client
     private $pasword;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Filiale", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Filiale", inversedBy="client", cascade={"persist"})
     */
     private $filiale;
 
@@ -205,6 +205,32 @@ class Client
     public function setPasword(string $pasword)
     {
         $this->pasword = $pasword;
+
+        return $this;
+    }
+
+  
+
+    //  /**
+    //  * Get the value of filiale
+    //  *
+    //  * @return  Filiale
+    //  */ 
+    // public function getFiliale()
+    // {
+    //     return $this->filiale;
+    // }
+
+    /**
+     * Set the value of id
+     *
+     * @param  int  $id
+     *
+     * @return  self
+     */ 
+    public function setId(int $id)
+    {
+        $this->id = $id;
 
         return $this;
     }

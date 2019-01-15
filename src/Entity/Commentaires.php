@@ -21,6 +21,19 @@ class Commentaires
     private $id;
 
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="string", length=300, nullable=false)
+     */
+    private $comment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etapes", inversedBy="commentaires",cascade={"persist"})
+     */
+    private $etapes;
+
+
     /**
      * Get the value of id
      *
@@ -30,18 +43,6 @@ class Commentaires
     {
         return $this->id;
     }
-
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="comment", type="string", length=300, nullable=false)
-     */
-    private $comment;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etapes", inversedBy="commentaires")
-     */
-    private $etapes;
 
      /**
      * @ORM\OneToMany(targetEntity="App\Entity\Reponses", mappedBy="commentaires")
@@ -62,12 +63,7 @@ class Commentaires
     }
 
 
-    public function setEtape(?Etapes $etapes): self
-    {
-        $this->etapes = $etapes;
-
-        return $this;
-    }
+  
 
     /**
      * Get the value of comment
@@ -89,6 +85,18 @@ class Commentaires
     public function setComment(string $comment)
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of etapes
+     *
+     * @return  self
+     */ 
+    public function setEtapes($etapes)
+    {
+        $this->etapes = $etapes;
 
         return $this;
     }

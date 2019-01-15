@@ -23,12 +23,16 @@ class TypePrestation
      */
     private $libelleType;
 
-    /**
-     * @var integer
-     * @ORM\column(name="montant", type="integer", nullable=true)
-     */
-    private $montantPrestation;
+    //  /**
+    //  * @ORM\OneToMany(targetEntity="App\Entity\Projet", mappedBy="type_prestation")
+    //  */
+    // private $projets;
 
+    // public function __construct()
+    // {
+    //     $this->projets = array();
+    // }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -46,27 +50,11 @@ class TypePrestation
         return $this;
     }
 
-    /**
-     * Get the value of montantPrestation
-     *
-     * @return  integer
-     */ 
-    public function getMontantPrestation()
-    {
-        return $this->montantPrestation;
-    }
-
-    /**
-     * Set the value of montantPrestation
-     *
-     * @param  integer  $montantPrestation
-     *
-     * @return  self
-     */ 
-    public function setMontantPrestation($montantPrestation)
-    {
-        $this->montantPrestation = $montantPrestation;
-
-        return $this;
-    }
+    // /**
+    //  * Get the value of projets
+    //  */ 
+    // public function getProjets()
+    // {
+    //     return $this->projets;
+    // }
 }
